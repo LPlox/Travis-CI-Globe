@@ -17,7 +17,7 @@
 //   }
 //===================================================== Travis data
 let arrCount = 0;
-const arrMax = 200;
+const arrMax = 400;
 let newObject;
 const commitArray = [];
 
