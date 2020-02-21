@@ -16,34 +16,31 @@
 //     };
 //   }
 //===================================================== Travis data
-const commitArray = [];
 let arrCount = 0;
 const arrMax = 200;
 let newObject;
+const commitArray = [];
 
-function fetchData() {
-  fetch("./dataset/435226515-435230014.json")
-    .then(response => response.json())
-    .then(data => {
-      //================================================= Create dataset
-      for (x in data) {
-        const user = data[x].commit.author_name;
-        const commitTime = data[x].commit.committed_at;
-        const commitHour = commitTime ? commitTime.substring(11, 13) : null;
-        const commitYear = commitTime ? commitTime.substring(0, 4) : null;
-        const newRadius = commitYear ? checkYear(commitYear) : null;
-        const timeLati = generateLatitude();
-        const timeLong = commitTime
-          ? generateLongitude(
-              timeZones[timeZones.findIndex(time => time.hour == commitHour)]
-                .startLongitude
-            )
-          : null;
-
-        createNewObject(user, timeLati, timeLong, newRadius);
-      }
-    });
-}
+const fetchData = fetch("./dataset/435226515-435230014.json")
+  .then(response => response.json())
+  .then(data => {
+    //================================================= Create dataset
+    for (x in data) {
+      const user = data[x].commit.author_name;
+      const commitTime = data[x].commit.committed_at;
+      const commitHour = commitTime ? commitTime.substring(11, 13) : null;
+      const commitYear = commitTime ? commitTime.substring(0, 4) : null;
+      const newRadius = commitYear ? checkYear(commitYear) : null;
+      const timeLati = generateLatitude();
+      const timeLong = commitTime
+        ? generateLongitude(
+            timeZones[timeZones.findIndex(time => time.hour == commitHour)]
+              .startLongitude
+          )
+        : null;
+      createNewObject(user, timeLati, timeLong, newRadius);
+    }
+  });
 //================================================= Creates new object and pushes it to new array [commitArray]
 function createNewObject(user, timeLati, timeLong, newRadius) {
   newObject = {
@@ -54,7 +51,12 @@ function createNewObject(user, timeLati, timeLong, newRadius) {
   };
 
   //================================================= checks repetition
-  if (userExists(user) === false && arrCount < arrMax && timeLong != null) {
+  if (
+    userExists(user) === false &&
+    arrCount < arrMax &&
+    timeLong != null &&
+    newRadius != null
+  ) {
     commitArray.push(newObject);
     arrCount++;
   }

@@ -54,8 +54,8 @@ effectFXAA.uniforms["resolution"].value.set(
 const copyShader = new THREE.ShaderPass(THREE.CopyShader);
 copyShader.renderToScreen = true;
 
-const bloomStrength = 2;
-const bloomRadius = 0;
+const bloomStrength = 1;
+const bloomRadius = 0.5;
 const bloomThreshold = 0.5;
 const bloomPass = new THREE.UnrealBloomPass(
   new THREE.Vector2(window.innerWidth, window.innerHeight),
@@ -117,11 +117,11 @@ d3.json(
     context.fill();
     context.stroke();
 
-    var mapTexture = new THREE.Texture(canvas.node());
+    const mapTexture = new THREE.Texture(canvas.node());
     mapTexture.needsUpdate = true;
 
     //===================================================== add globe
-    var group = new THREE.Group();
+    const group = new THREE.Group();
     scene.add(group);
     group.rotateX(Math.PI / 8);
 
@@ -129,6 +129,7 @@ d3.json(
 
     const sphereGeometry = new THREE.SphereGeometry(RADIUS, 60, 60);
 
+    //Test wireframe material
     // const sphereMaterial = new THREE.MeshBasicMaterial({
     //   color: 0x0000ff,
     //   transparent: false,
@@ -138,7 +139,7 @@ d3.json(
     //   wireframeLinecap: "round"
     // });
 
-    var sphereMaterial = new THREE.MeshPhongMaterial({
+    const sphereMaterial = new THREE.MeshPhongMaterial({
       opacity: 1,
       shininess: 5,
       specular: 0x1d1d1d,
@@ -147,17 +148,20 @@ d3.json(
       bumpMap: new THREE.TextureLoader().load("assets/earth-bump.jpg")
     });
 
-    var earthMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+    const earthMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
     earthMesh.name = "earth";
     group.add(earthMesh);
 
+    placePoint();
+
     //===================================================== Placing the points
-    function placePoint(array) {
-      array.map(commit => {
+    async function placePoint() {
+      await fetchData;
+
+      commitArray.map(commit => {
         const lat = commit.latitude;
         const long = commit.longitude;
         const radius = commit.radius;
-        console.log(lat, long, raduis);
 
         const x = -(
           radius *
@@ -170,8 +174,21 @@ d3.json(
           Math.sin((long + 180) * (Math.PI / 180));
         const y = radius * Math.cos((90 - lat) * (Math.PI / 180));
 
+        const color = radius => {
+          switch (radius) {
+            case 140:
+              return "white";
+            case 200:
+              return "yellow";
+            case 260:
+              return "red";
+          }
+        };
+        console.log(color);
         const pointGeo = new THREE.SphereGeometry(1, 15, 15);
-        const material = new THREE.MeshBasicMaterial({ color: "white" });
+        const material = new THREE.MeshBasicMaterial({
+          color: new THREE.Color(color)
+        });
         const point = new THREE.Mesh(pointGeo, material);
 
         point.position.set(x, y, z);
@@ -179,17 +196,13 @@ d3.json(
       });
     }
 
-    fetchData();
-    console.log(commitArray);
-    placePoint(commitArray);
-
     //===================================================== add Animation
     function animate() {
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
       controls.update();
       composer.render();
-      document.getElementById("commits").innerHTML = commitArray.length;
+      // document.getElementById("commits").innerHTML = commitArray.length;
     }
     animate();
   }
