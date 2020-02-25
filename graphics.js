@@ -153,7 +153,7 @@ d3.json(
     group.add(earthMesh);
 
     placePoint();
-
+    let countDisplayedPoints = 0;
     //===================================================== Placing the points
     async function placePoint() {
       await fetchData;
@@ -186,8 +186,13 @@ d3.json(
             break;
         }
 
-        console.log(color);
-        const pointGeo = new THREE.SphereGeometry(1, 15, 15);
+        const pointWidthHeight = Math.floor(Math.random() * 10);
+
+        const pointGeo = new THREE.SphereGeometry(
+          1,
+          pointWidthHeight,
+          pointWidthHeight
+        );
         const material = new THREE.MeshBasicMaterial({
           color: new THREE.Color(color)
         });
@@ -195,6 +200,7 @@ d3.json(
 
         point.position.set(x, y, z);
         group.add(point);
+        countDisplayedPoints++;
       });
     }
 
@@ -204,7 +210,7 @@ d3.json(
       renderer.render(scene, camera);
       controls.update();
       composer.render();
-      document.getElementById("commits").innerHTML = commitArray.length;
+      document.getElementById("commits").innerHTML = countDisplayedPoints;
     }
     animate();
   }
