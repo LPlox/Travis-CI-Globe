@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 //===================================================== Websocket data
 // if (window.location.protocol == "https:") {
 //     protocol = "wss";
@@ -92,4 +90,3 @@ function generateLatitude() {
 function generateLongitude(min) {
   return Math.floor(Math.random() * 15) - min;
 }
->>>>>>> parent of a64a22e... The color and sizes works now

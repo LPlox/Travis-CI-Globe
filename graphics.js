@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /*
 Resources:
 Made with the help of: https://codepen.io/b29/pen/vQwrNZ
@@ -209,4 +207,3 @@ d3.json(
     animate();
   }
 ); //end d3.json
->>>>>>> parent of a64a22e... The color and sizes works now
