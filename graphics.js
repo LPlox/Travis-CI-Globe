@@ -54,8 +54,8 @@ effectFXAA.uniforms["resolution"].value.set(
 const copyShader = new THREE.ShaderPass(THREE.CopyShader);
 copyShader.renderToScreen = true;
 
-const bloomStrength = 1;
-const bloomRadius = 0.5;
+const bloomStrength = 2;
+const bloomRadius = 0;
 const bloomThreshold = 0.5;
 const bloomPass = new THREE.UnrealBloomPass(
   new THREE.Vector2(window.innerWidth, window.innerHeight),
@@ -174,16 +174,18 @@ d3.json(
           Math.sin((long + 180) * (Math.PI / 180));
         const y = radius * Math.cos((90 - lat) * (Math.PI / 180));
 
-        const color = radius => {
-          switch (radius) {
-            case 140:
-              return "white";
-            case 200:
-              return "yellow";
-            case 260:
-              return "red";
-          }
-        };
+        switch (radius) {
+          case 140:
+            color = "white";
+            break;
+          case 200:
+            color = "yellow";
+            break;
+          case 260:
+            color = "red";
+            break;
+        }
+
         console.log(color);
         const pointGeo = new THREE.SphereGeometry(1, 15, 15);
         const material = new THREE.MeshBasicMaterial({
@@ -202,7 +204,7 @@ d3.json(
       renderer.render(scene, camera);
       controls.update();
       composer.render();
-      // document.getElementById("commits").innerHTML = commitArray.length;
+      document.getElementById("commits").innerHTML = commitArray.length;
     }
     animate();
   }
