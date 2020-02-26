@@ -123,6 +123,8 @@ const timeZones = [
 ];
 
 //===================================================== Writing in hours in the time zones
+//Writing in each hour in the timeZones object, this is updated each time the code runs
+//Needs a review?
 
 for (let i = 0; i < timeZones.length; i++) {
   setCurrentHour(parseInt(timeZones[i].name), i);
