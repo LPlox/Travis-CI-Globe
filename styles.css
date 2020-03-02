@@ -56,8 +56,16 @@ p {
   font-size: 14px;
 }
 
-@media (min-width: 1300px) {
+@media (max-width: 600px) {
+  .counter {
+    position: absolute;
+    top: 10%;
+    left: 70%;
+  }
+
   section {
-    left: 100px;
+    user-select: none;
+    pointer-events: none;
+    background: none !important;
   }
 }
