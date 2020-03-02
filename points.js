@@ -57,9 +57,15 @@ function createNewObject(user, timeLati, timeLong, newRadius) {
     timeLong != null &&
     newRadius != null
   ) {
-    commitArray.push(newObject);
-    arrCount++;
+    addToArray(newObject);
   }
+}
+
+//================================================= Adds to array
+
+function addToArray(newObject) {
+  commitArray.push(newObject);
+  arrCount++;
 }
 
 //===================================================== Filter data functions
