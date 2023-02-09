@@ -3,123 +3,123 @@ const timeZones = [
   {
     name: "-11",
     hour: 0,
-    startLongitude: -172.5
+    startLongitude: -172.5,
   },
   {
     name: "-10",
     hour: 0,
-    startLongitude: -157.5
+    startLongitude: -157.5,
   },
   {
     name: "-9",
     hour: 0,
-    startLongitude: -142.5
+    startLongitude: -142.5,
   },
   {
     name: "-8",
     hour: 0,
-    startLongitude: -127.5
+    startLongitude: -127.5,
   },
   {
     name: "-7",
     hour: 0,
-    startLongitude: -112.5
+    startLongitude: -112.5,
   },
   {
     name: "-6",
     hour: 0,
-    startLongitude: -97.5
+    startLongitude: -97.5,
   },
   {
     name: "-5",
     hour: 0,
-    startLongitude: -82.5
+    startLongitude: -82.5,
   },
   {
     name: "-4",
     hour: 0,
-    startLongitude: -67.5
+    startLongitude: -67.5,
   },
   {
     name: "-3",
     hour: 0,
-    startLongitude: -51.5
+    startLongitude: -51.5,
   },
   {
     name: "-2",
     hour: 0,
-    startLongitude: -37.5
+    startLongitude: -37.5,
   },
   {
     name: "-1",
     hour: 0,
-    startLongitude: -22.5
+    startLongitude: -22.5,
   },
   {
     name: "0",
     hour: 0,
-    startLongitude: -7.5
+    startLongitude: -7.5,
   },
   {
     name: "1",
     hour: 0,
-    startLongitude: 7.5
+    startLongitude: 7.5,
   },
   {
     name: "2",
     hour: 0,
-    startLongitude: 22.5
+    startLongitude: 22.5,
   },
   {
     name: "3",
     hour: 0,
-    startLongitude: 37.5
+    startLongitude: 37.5,
   },
   {
     name: "4",
     hour: 0,
-    startLongitude: 52.5
+    startLongitude: 52.5,
   },
   {
     name: "5",
     hour: 0,
-    startLongitude: 67.5
+    startLongitude: 67.5,
   },
   {
     name: "6",
     hour: 0,
-    startLongitude: 82.5
+    startLongitude: 82.5,
   },
   {
     name: "7",
     hour: 0,
-    startLongitude: 97.5
+    startLongitude: 97.5,
   },
   {
     name: "8",
     hour: 0,
-    startLongitude: 112.5
+    startLongitude: 112.5,
   },
   {
     name: "9",
     hour: 0,
-    startLongitude: 127.5
+    startLongitude: 127.5,
   },
   {
     name: "10",
     hour: 0,
-    startLongitude: 142.5
+    startLongitude: 142.5,
   },
   {
     name: "11",
     hour: 0,
-    startLongitude: 157.5
+    startLongitude: 157.5,
   },
   {
     name: "12",
     hour: 0,
-    startLongitude: 172.5
-  }
+    startLongitude: 172.5,
+  },
 ];
 
 //===================================================== Writing in hours in the time zones

@@ -22,24 +22,24 @@ let newObject;
 const commitArray = [];
 
 const fetchData = fetch("./dataset/435226515-435230014.json")
-  .then(response => response.json())
-  .then(data => {
+  .then((response) => response.json())
+  .then((data) => {
     //================================================= Create dataset
-    for (x in data) {
-      const user = data[x].commit.author_name;
-      const commitTime = data[x].commit.committed_at;
+    data.map((point) => {
+      const user = point.commit.author_name;
+      const commitTime = point.commit.committed_at;
       const commitHour = commitTime ? commitTime.substring(11, 13) : null;
       const commitYear = commitTime ? commitTime.substring(0, 4) : null;
       const newRadius = commitYear ? checkYear(commitYear) : null;
       const timeLati = generateLatitude();
       const timeLong = commitTime
         ? generateLongitude(
-            timeZones[timeZones.findIndex(time => time.hour == commitHour)]
+            timeZones[timeZones.findIndex((time) => time.hour == commitHour)]
               .startLongitude
           )
         : null;
       createNewObject(user, timeLati, timeLong, newRadius);
-    }
+    });
   });
 //================================================= Creates new object and pushes it to new array [commitArray]
 function createNewObject(user, timeLati, timeLong, newRadius) {
@@ -47,7 +47,7 @@ function createNewObject(user, timeLati, timeLong, newRadius) {
     name: user,
     latitude: timeLati,
     longitude: timeLong,
-    radius: newRadius
+    radius: newRadius,
   };
 
   //================================================= checks repetition
@@ -70,7 +70,7 @@ function addToArray(newObject) {
 
 //===================================================== Filter data functions
 function userExists(username) {
-  return commitArray.some(arr => {
+  return commitArray.some((arr) => {
     return arr.name === username;
   });
 }
@@ -96,3 +96,5 @@ function generateLatitude() {
 function generateLongitude(min) {
   return Math.floor(Math.random() * 15) - min;
 }
+
+export default commitArray;

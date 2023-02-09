@@ -4,6 +4,19 @@ Made with the help of: https://codepen.io/b29/pen/vQwrNZ
 Textures from: https://www.gsmlondon.ac.uk/global-oil-map/#1995-importers-392
 */
 
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { StereoEffect } from "three/addons/effects/StereoEffect.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+// import { MaskPass } from "three/addons/postprocessing/MaskPass.js";
+import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
+import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+import { CopyShader } from "three/addons/shaders/CopyShader.js";
+import { FXAAShader } from "three/addons/shaders/FXAAShader.js";
+// import { ConvolutionShader } from "three/addons/shaders/ConvolutionShader.js";
+// import { LuminosityHighPassShader } from "three/addons/shaders/LuminosityHighPassShader.js";
+import commitArray from "./points.js";
 //===================================================== add Scene
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x121212);
@@ -33,38 +46,38 @@ scene.add(light);
 //===================================================== add canvas
 const renderer = new THREE.WebGLRenderer({
   antialias: true,
-  alpha: true
+  alpha: true,
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.toneMapping = THREE.LinearToneMapping;
 document.body.appendChild(renderer.domElement);
 
 //===================================================== add controls
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
 controls.autoRotate = true;
 controls.autoRotateSpeed = 1;
 
 //===================================================== add GLow
-const renderScene = new THREE.RenderPass(scene, camera);
-const effectFXAA = new THREE.ShaderPass(THREE.FXAAShader);
+const renderScene = new RenderPass(scene, camera);
+const effectFXAA = new ShaderPass(FXAAShader);
 effectFXAA.uniforms["resolution"].value.set(
   1 / window.innerWidth,
   1 / window.innerHeight
 );
-const copyShader = new THREE.ShaderPass(THREE.CopyShader);
+const copyShader = new ShaderPass(CopyShader);
 copyShader.renderToScreen = true;
 
 const bloomStrength = 2;
 const bloomRadius = 0;
 const bloomThreshold = 0.5;
-const bloomPass = new THREE.UnrealBloomPass(
+const bloomPass = new UnrealBloomPass(
   new THREE.Vector2(window.innerWidth, window.innerHeight),
   bloomStrength,
   bloomRadius,
   bloomThreshold
 );
 
-const composer = new THREE.EffectComposer(renderer);
+const composer = new EffectComposer(renderer);
 composer.setSize(window.innerWidth, window.innerHeight);
 composer.addPass(renderScene);
 composer.addPass(effectFXAA);
@@ -72,7 +85,7 @@ composer.addPass(bloomPass);
 composer.addPass(copyShader);
 
 //===================================================== resize
-window.addEventListener("resize", function() {
+window.addEventListener("resize", function () {
   let width = window.innerWidth;
   let height = window.innerHeight;
   renderer.setSize(width, height);
@@ -83,7 +96,7 @@ window.addEventListener("resize", function() {
 //===================================================== d3.json
 d3.json(
   "https://raw.githubusercontent.com/baronwatts/data/master/world.json",
-  function(err, data) {
+  function (err, data) {
     //===================================================== crate canvas texturefor the globe
     const projection = d3.geo
       .equirectangular()
@@ -101,10 +114,7 @@ d3.json(
 
     const context = canvas.node().getContext("2d");
 
-    const path = d3.geo
-      .path()
-      .projection(projection)
-      .context(context);
+    const path = d3.geo.path().projection(projection).context(context);
 
     context.strokeStyle = "white";
     context.lineWidth = 0.25;
@@ -145,20 +155,21 @@ d3.json(
       specular: 0x1d1d1d,
       color: new THREE.Color("white"),
       map: new THREE.TextureLoader().load("assets/earth.jpg"),
-      bumpMap: new THREE.TextureLoader().load("assets/earth-bump.jpg")
+      bumpMap: new THREE.TextureLoader().load("assets/earth-bump.jpg"),
     });
 
     const earthMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
     earthMesh.name = "earth";
     group.add(earthMesh);
 
-    placePoint();
     let countDisplayedPoints = 0;
+    placePoint();
     //===================================================== Placing the points
     async function placePoint() {
-      await fetchData;
+      // await fetchData;
+      let color;
 
-      commitArray.map(commit => {
+      commitArray.map((commit) => {
         const lat = commit.latitude;
         const long = commit.longitude;
         const radius = commit.radius;
@@ -194,7 +205,7 @@ d3.json(
           pointWidthHeight
         );
         const material = new THREE.MeshBasicMaterial({
-          color: new THREE.Color(color)
+          color: new THREE.Color(color),
         });
         const point = new THREE.Mesh(pointGeo, material);
 
@@ -214,4 +225,4 @@ d3.json(
     }
     animate();
   }
-); //end d3.json
+);
