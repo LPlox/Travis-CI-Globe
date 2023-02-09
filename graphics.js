@@ -16,7 +16,7 @@ import { CopyShader } from "three/addons/shaders/CopyShader.js";
 import { FXAAShader } from "three/addons/shaders/FXAAShader.js";
 // import { ConvolutionShader } from "three/addons/shaders/ConvolutionShader.js";
 // import { LuminosityHighPassShader } from "three/addons/shaders/LuminosityHighPassShader.js";
-import commitArray from "./points.js";
+
 //===================================================== add Scene
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x121212);
@@ -166,7 +166,7 @@ d3.json(
     placePoint();
     //===================================================== Placing the points
     async function placePoint() {
-      // await fetchData;
+      await fetchData;
       let color;
 
       commitArray.map((commit) => {

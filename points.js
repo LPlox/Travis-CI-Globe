@@ -96,5 +96,3 @@ function generateLatitude() {
 function generateLongitude(min) {
   return Math.floor(Math.random() * 15) - min;
 }
-
-export default commitArray;
